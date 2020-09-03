@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <a href="{{ route('prizing')}}" class="btn btn-success pull-right" role="button"> Receive a prize </a>
                 </div>
             </div>
         </div>
