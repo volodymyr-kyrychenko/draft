@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Bonuse extends Model
+class MoneyReservation extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,6 +12,6 @@ class Bonuse extends Model
      * @var array
      */
     protected $fillable = [
-        'min_amount', 'max_amount',
+        'user_id', 'status', 'amount',
     ];
 }

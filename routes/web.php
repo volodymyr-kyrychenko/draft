@@ -20,8 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/prizing', 'PrizeController@index')->name('prizing');
 
+Route::get('/prizing', 'PrizeController@index')->name('prizing');
 Route::get('/receive', 'PrizeController@receive')->name('receive');
-Route::get('/convert', 'PrizeController@index')->name('convert');
+Route::get('/convert', 'PrizeController@convert')->name('convert');
 Route::get('/refuse', 'PrizeController@refuse')->name('refuse');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMoneyRreservationsTable extends Migration
+class CreateMoneyReservationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMoneyRreservationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('money_rreservations', function (Blueprint $table) {
+        Schema::create('money_reservations', function (Blueprint $table) {
             $table->id();
 			$table->bigInteger('user_id');
 			$table->smallInteger('status')->default(0)
@@ -31,6 +31,6 @@ class CreateMoneyRreservationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('money_rreservations');
+        Schema::dropIfExists('money_reservations');
     }
 }

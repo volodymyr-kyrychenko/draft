@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Prize, App\Money, App\Bonuse;
+use App\Prize, App\Money, App\Bonus;
 
 class PrizeSeeder extends Seeder
 {
@@ -59,7 +59,7 @@ class PrizeSeeder extends Seeder
 			'max_amount' => 21
 		]);
 
-		Bonuse::create([
+		Bonus::create([
 			'min_amount' => 4,
 			'max_amount' => 31
 		]);

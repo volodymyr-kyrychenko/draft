@@ -5,22 +5,31 @@ declare(strict_types = 1);
 namespace App\Http\Helpers;
 
 use App\Http\Enums\PrizeTypeEnum;
+use App\Http\Services\BonusService;
 use App\Http\Services\MoneyService;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use App\Http\Services\PrizeService;
 
 class PrizeHelper
 {
-	protected $moneyService;
 	protected $services;
 
-    public function __construct(MoneyService $moneyService)
+    /**
+     * PrizeHelper constructor.
+     * @param MoneyService $moneyService
+     * @param BonusService $bonusService
+     * @param PrizeService $prizeService
+     */
+    public function __construct(MoneyService $moneyService, BonusService $bonusService, PrizeService $prizeService)
     {
-		$this->moneyService = $moneyService;
 		$this->services[PrizeTypeEnum::MONEY] = $moneyService;
+        $this->services[PrizeTypeEnum::BONUSES] = $bonusService;
+        $this->services[PrizeTypeEnum::PRIZES] = $prizeService;
     }
 
-	public function checkPrize(): array
+    /**
+     * @return array
+     */
+    public function checkPrize(): array
 	{
         foreach ($this->services as $service){
             $prize = $service->checkPrize();
@@ -32,12 +41,31 @@ class PrizeHelper
         return [];
 	}
 
-	public function getPrize(): array
+    /**
+     * @return array
+     */
+    public function getPrize(): array
 	{
-        $randomServiseKey = array_rand($this->services);
-        $prize = $this->services[$randomServiseKey]->getPrize();
+        while (true) {
+            if (empty($this->services)) {
+                // todo write an error to the log
 
-        return $prize;
+                return [
+                    'name' => 'no win',
+                    'type' => PrizeTypeEnum::NONE,
+                    'id' => 0,
+                    'amount' => 0
+                ];
+            }
+
+            $randomServiseKey = array_rand($this->services);
+            $prize = $this->services[$randomServiseKey]->getPrize();
+
+            if (!empty($prize))
+                return $prize;
+
+            unset($this->services[$randomServiseKey]);
+        }
 	}
 
 	public function receive(): void
@@ -48,5 +76,10 @@ class PrizeHelper
     public function refuse(): void
     {
         $this->services[request('type')]->refuse();
+    }
+
+    public function convert(): void
+    {
+        $this->services[request('type')]->convert();
     }
 }

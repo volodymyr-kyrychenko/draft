@@ -18,7 +18,7 @@ class CreatePrizeReservationsTable extends Migration
 			$table->bigInteger('prize_id');
 			$table->bigInteger('user_id');
 			$table->smallInteger('status')->default(0)
-				->comment('0 - reserved, 2 - canceled, 3 - approved');
+                ->comment('0 - reserved, 1 - canceled, 2 - sending, 3 - sent, 4 - converted');
             $table->timestamps();
 			$table->index(['user_id', 'status']);
         });
