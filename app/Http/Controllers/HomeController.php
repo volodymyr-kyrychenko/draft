@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Helpers\PrizeHelper;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {

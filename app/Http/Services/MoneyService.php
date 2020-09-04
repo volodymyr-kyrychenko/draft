@@ -6,6 +6,7 @@ namespace App\Http\Services;
 
 use App\Http\Enums\PrizeTypeEnum;
 use App\Http\Enums\ReservationStatusEnum;
+use App\Jobs\MoneySenderJob;
 use App\Money;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -72,8 +73,11 @@ class MoneyService implements PrizeServiceInterface
 
     public function receive(): void
     {
-        MoneyReservation::where('id', request('id'))
+        $id = request('id');
+        MoneyReservation::where('id', $id)
             ->update(['status' => ReservationStatusEnum::SENDING]);
+
+        MoneySenderJob::dispatch($id);
     }
 
     public function refuse(): void
